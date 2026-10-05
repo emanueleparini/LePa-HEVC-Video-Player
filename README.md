@@ -92,8 +92,8 @@ Requirements: [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) and
 [Inno Setup 6](https://jrsoftware.org/isinfo.php).
 
 ```powershell
-git clone <this repository>
-cd <repository folder>
+git clone https://github.com/emanueleparini/LePa-HEVC-Video-Player.git
+cd LePa-HEVC-Video-Player
 
 # run it
 dotnet run --project src/LePaHevcPlayer -c Release
