@@ -11,7 +11,7 @@
     <RootNamespace>HevcPlayer</RootNamespace>
     <Product>LePa HEVC Player</Product>
     <AssemblyTitle>LePa HEVC Player</AssemblyTitle>
-    <Company>LePa</Company>
+    <Company>LePa s.r.l.</Company>
     <Authors>Emanuele Parini</Authors>
     <Description>Free, open-source HEVC / H.265 video player for Windows</Description>
     <Copyright>Copyright (c) 2026 Emanuele Parini</Copyright>

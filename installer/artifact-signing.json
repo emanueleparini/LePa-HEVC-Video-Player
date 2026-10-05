@@ -1,0 +1,16 @@
+{
+  "Endpoint": "https://neu.codesigning.azure.net/",
+  "CodeSigningAccountName": "lepasigning",
+  "CertificateProfileName": "LePaPublic",
+  "ExcludeCredentials": [
+    "EnvironmentCredential",
+    "ManagedIdentityCredential",
+    "WorkloadIdentityCredential",
+    "SharedTokenCacheCredential",
+    "VisualStudioCredential",
+    "VisualStudioCodeCredential",
+    "AzurePowerShellCredential",
+    "AzureDeveloperCliCredential",
+    "InteractiveBrowserCredential"
+  ]
+}

@@ -17,7 +17,7 @@ AppId={{6F1B7E2A-4C3D-4E8B-9A51-2D7C0B8E4F13}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppVerName={#AppName} {#AppVersion}
-AppPublisher=LePa
+AppPublisher=LePa s.r.l.
 DefaultDirName={autopf}\{#AppName}
 DefaultGroupName={#AppName}
 DisableProgramGroupPage=yes
@@ -38,6 +38,11 @@ Compression=lzma2/ultra64
 SolidCompression=yes
 ChangesAssociations=yes
 CloseApplications=yes
+#ifdef Sign
+; build.ps1 -Sign defines the "artifactsigning" tool via ISCC /S
+SignTool=artifactsigning
+SignedUninstaller=yes
+#endif
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"

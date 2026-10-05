@@ -27,6 +27,7 @@ src/LePaHevcPlayer/          WPF app (namespace HevcPlayer, assembly "LePa HEVC 
   UrlDialog.cs               "Open URL" dialog, built in code
   Assets/                    app.ico, icon-512.png, logo-symbol.png (WPF Resources)
 installer/LePaHevcPlayer.iss Inno Setup 6 script
+installer/artifact-signing.json  code-signing account/profile (not secret)
 build.ps1                    publish → plugin cache → zip → installer, into ./artifacts
 .github/workflows/release.yml  tag v* → builds and publishes a GitHub release
 docs/images/                 README graphics (banner, screenshots, icon)
@@ -46,6 +47,15 @@ dotnet run --project src/LePaHevcPlayer -c Release   # run
 - Self-contained win-x64 only (`VlcWindowsX86Enabled=false`). Unused libVLC plugin folders are
   excluded in the csproj (`VlcWindowsX64ExcludeFiles`); if a format stops working, check there first.
 - Close any running "LePa HEVC Player.exe" before building, or the output files are locked.
+- **Code signing** (`./build.ps1 -Sign`, always on tag builds in CI): Azure Artifact Signing, account
+  `lepasigning` (North Europe), certificate profile `LePaPublic`, publisher **LePa s.r.l.** (keep
+  `AppPublisher` in the .iss and `<Company>` in the csproj equal to it). Account details are in
+  `installer/artifact-signing.json`; the signtool plug-in (dlib) is downloaded into `.tools/`.
+  Auth is the Azure CLI only: CI logs in via OIDC (`azure/login`, GitHub environment `release`,
+  secrets `AZURE_CLIENT_ID`/`AZURE_TENANT_ID`/`AZURE_SUBSCRIPTION_ID`); locally `az login` with an
+  account that has "Artifact Signing Certificate Profile Signer". A 403 means wrong account/role,
+  profile name or endpoint region. Our exe/dll are signed **before** the plugin cache is generated
+  (see 2.); libVLC's own DLLs are already signed by VideoLAN and must not be touched.
 
 ## Architecture decisions and pitfalls (non-obvious, all learned the hard way)
 

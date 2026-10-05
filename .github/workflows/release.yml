@@ -1,4 +1,5 @@
 # Push a tag like v1.0.0 to build the installer + portable zip and publish a GitHub release.
+# Tag builds are code-signed with Azure Artifact Signing; manual runs build unsigned test artifacts.
 name: Release
 
 on:
@@ -8,10 +9,13 @@ on:
 
 permissions:
   contents: write
+  id-token: write   # OIDC login to Azure, no stored password
 
 jobs:
   build:
     runs-on: windows-latest
+    # The Azure federated credential trusts only this environment
+    environment: ${{ startsWith(github.ref, 'refs/tags/') && 'release' || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -22,9 +26,18 @@ jobs:
       - name: Install Inno Setup
         run: choco install innosetup -y --no-progress
 
+      - name: Azure login
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Build
         shell: pwsh
-        run: ./build.ps1
+        run: |
+          if ('${{ github.ref }}'.StartsWith('refs/tags/')) { ./build.ps1 -Sign } else { ./build.ps1 }
 
       - name: Publish release
         if: startsWith(github.ref, 'refs/tags/')

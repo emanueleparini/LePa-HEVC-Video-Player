@@ -13,3 +13,6 @@ artifacts/
 /*.mp4
 /*.mkv
 /*.mov
+
+# Downloaded build tools (signing client)
+.tools/
