@@ -31,6 +31,7 @@ installer/artifact-signing.json  code-signing account/profile (not secret)
 build.ps1                    publish → plugin cache → zip → installer, into ./artifacts
 .github/workflows/release.yml  tag v* → builds and publishes a GitHub release
 docs/images/                 README graphics (banner, screenshots, icon)
+PRIVACY.md                   privacy policy (linked from the Microsoft Store listing; keep it true to the code)
 ```
 
 ## Build / run
