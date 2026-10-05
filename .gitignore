@@ -1,0 +1,15 @@
+# Build output
+bin/
+obj/
+artifacts/
+
+# IDE
+.vs/
+.vscode/
+*.user
+*.suo
+
+# Local test media
+/*.mp4
+/*.mkv
+/*.mov

@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <VlcWindowsX86Enabled>false</VlcWindowsX86Enabled>
+    <AssemblyName>LePa HEVC Player</AssemblyName>
+    <RootNamespace>HevcPlayer</RootNamespace>
+    <Product>LePa HEVC Player</Product>
+    <AssemblyTitle>LePa HEVC Player</AssemblyTitle>
+    <Company>LePa</Company>
+    <Authors>Emanuele Parini</Authors>
+    <Description>Free, open-source HEVC / H.265 video player for Windows</Description>
+    <Copyright>Copyright (c) 2026 Emanuele Parini</Copyright>
+    <!-- Single source of truth for the version: build.ps1 and the installer read it from here -->
+    <Version>1.0.0</Version>
+    <ApplicationIcon>Assets\app.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Link="LICENSE.txt" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.md" Link="THIRD-PARTY-NOTICES.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LibVLCSharp.WPF" Version="3.10.1" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.24" />
+  </ItemGroup>
+
+  <!-- libVLC plugins a player never uses (streaming output, muxers, visualizations, network discovery) -->
+  <ItemGroup>
+    <VlcWindowsX64ExcludeFiles Include="plugins\access_output\%2A" />
+    <VlcWindowsX64ExcludeFiles Include="plugins\mux\%2A" />
+    <VlcWindowsX64ExcludeFiles Include="plugins\stream_out\%2A" />
+    <VlcWindowsX64ExcludeFiles Include="plugins\services_discovery\%2A" />
+    <VlcWindowsX64ExcludeFiles Include="plugins\visualization\%2A" />
+    <VlcWindowsX64ExcludeFiles Include="plugins\video_splitter\%2A" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\app.ico" />
+    <Resource Include="Assets\logo-symbol.png" />
+  </ItemGroup>
+
+</Project>
