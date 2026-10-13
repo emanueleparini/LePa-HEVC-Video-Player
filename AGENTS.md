@@ -25,6 +25,7 @@ src/LePaHevcPlayer/          WPF app (namespace HevcPlayer, assembly "LePa HEVC 
   MainWindow.xaml(.cs)       the whole player: menus, controls, playlist, fullscreen, shortcuts
   AppSettings.cs             %AppData%\LePa HEVC Player\settings.json (volume, recent files)
   UrlDialog.cs               "Open URL" dialog, built in code
+  AboutDialog.cs             About dialog (version, links to lepa.ai and GitHub), built in code
   Assets/                    app.ico, icon-512.png, logo-symbol.png (WPF Resources)
 installer/LePaHevcPlayer.iss Inno Setup 6 script
 installer/artifact-signing.json  code-signing account/profile (not secret)
@@ -93,14 +94,18 @@ dotnet run --project src/LePaHevcPlayer -c Release   # run
 ## Verifying changes
 
 - Build must stay at **0 warnings, 0 errors**.
-- To check that a file actually plays without GUI interaction, launch the exe with the file as
-  argument and poll `Process.MainWindowTitle`: it becomes `"<file name> — LePa HEVC Player"` once
-  playback starts. A generated HEVC sample is easy:
+- To check that a file opens without GUI interaction, launch the exe with the file as argument and
+  poll `Process.MainWindowTitle`: it becomes `"<file name> — LePa HEVC Player"`. That only proves the
+  file was handed to libVLC (`StartMedia` sets the title right after `Play`), not that it decodes: the
+  codec chip (`HEVC · 1080p`) appears only on `Playing`. Don't match the em dash from Windows
+  PowerShell 5.1 scripts saved as UTF-8 without BOM: it is read as ANSI and never matches. A generated HEVC sample is easy:
   `ffmpeg -f lavfi -i mandelbrot=size=1920x1080:rate=30 -t 20 -c:v libx265 -tag:v hvc1 sample.mp4`
 - **Screenshots: never capture the screen** (`CopyFromScreen` etc.). The maintainer's desktop has
   private content and screen captures have leaked it twice, even with overlap checks (the transparent
   overlay window fools hit-testing). Render only the app window with `PrintWindow(hwnd, hdc, 2)`;
-  note it does not include the overlay window (placeholder/OSD).
+  note it does not include the overlay window (placeholder/OSD). While a video is playing, the WPF
+  chrome (menu, control bar) comes out white or stale in `PrintWindow`; capture from a throwaway build
+  that sets `RenderOptions.ProcessRenderMode = RenderMode.SoftwareOnly` (don't ship it).
 - Posted mouse messages (`PostMessage WM_LBUTTONDOWN`) are ignored by WPF; don't use them to test.
 - Test the installer with a per-user silent install into a temp dir and uninstall afterwards:
   `Setup.exe /VERYSILENT /SUPPRESSMSGBOXES /CURRENTUSER /TASKS="" /DIR="<tmp>"`, then `unins000.exe /VERYSILENT`.

@@ -771,11 +771,7 @@ public partial class MainWindow : Window
         "Ctrl+W\t\tClose file",
         "Keyboard shortcuts", MessageBoxButton.OK, MessageBoxImage.None);
 
-    private void About_Click(object sender, RoutedEventArgs e) => MessageBox.Show(this,
-        $"LePa HEVC Player\n\nOpen-source video player for Windows, powered by libVLC {_libVLC.Version}.\n" +
-        "Built-in HEVC/H.265 decoding with hardware acceleration (D3D11VA/DXVA2): " +
-        "no paid HEVC Video Extensions from the Microsoft Store required.",
-        "About", MessageBoxButton.OK, MessageBoxImage.Information);
+    private void About_Click(object sender, RoutedEventArgs e) => AboutDialog.Show(this, _libVLC.Version);
 
     // ===================== Seek bar =====================
 

@@ -1,6 +1,6 @@
 # Privacy Policy — LePa HEVC Player
 
-_Last updated: October 5, 2026_
+_Last updated: October 13, 2026_
 
 LePa HEVC Player is published by LePa s.r.l. (Cesenatico, Italy). This policy covers the Windows app
 distributed through GitHub and the Microsoft Store.
@@ -26,6 +26,9 @@ remove them automatically.
 
 The app connects to the internet only when you explicitly open a network stream (File > Open URL / stream…).
 In that case it connects directly to the address you entered, and that server's own privacy policy applies.
+
+The About window contains links to lepa.ai and to the source code on GitHub. They open in your web
+browser only if you click them; the website link only tells the site that the visit came from the app.
 
 ## Contact
 
